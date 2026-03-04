@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Infrastructure/">
+    <Project Path="OrderManagement.Authentication/OrderManagement.Authentication.csproj" Id="f89c24f8-a78f-48e1-a8dc-9145c11c38b9" />
+    <Project Path="OrderManagement.Persistanse/OrderManagement.Persistanse.csproj" />
+  </Folder>
+  <Folder Name="/Tests/" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+  <Project Path="OrderManagement.Application/OrderManagement.Application.csproj" />
+  <Project Path="OrderManagement.Domain/OrderManagement.Domain.csproj" />
+  <Project Path="OrderManagement.Models/OrderManagement.Models.csproj" />
+  <Project Path="OrderManagement.WebAPI/OrderManagement.WebAPI.csproj" />
+</Solution>

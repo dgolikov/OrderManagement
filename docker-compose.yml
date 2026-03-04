@@ -1,0 +1,23 @@
+services:
+  ordermanagement.webapi:
+    image: ${DOCKER_REGISTRY-}ordermanagementwebapi
+    build:
+      context: .
+      dockerfile: OrderManagement.WebAPI/Dockerfile
+    networks:
+     - ordermanagementnetwork
+  mongodb:
+    image: mongo:8.0.3
+    container_name: mongodb
+    volumes:
+        - "D:\\Docker\\Volumes\\OrderManagement:/data/db"
+    ports:
+        - "29700:27017"
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=ordermnguser
+        - MONGO_INITDB_ROOT_PASSWORD=12345678Aa
+    networks:
+     - ordermanagementnetwork
+networks:
+  ordermanagementnetwork:
+    driver: bridge
