@@ -2,7 +2,7 @@
 using OrderManagement.Domain.Common.Services;
 using OrderManagement.Domain.Product;
 
-namespace OrderManagement.Persistanse;
+namespace OrderManagement.Persistence;
 
 public sealed class ProductRepository : BaseRepository<Product>, IProductRepository
 {

@@ -18,26 +18,34 @@ public static class ProductEndpoints
             var query = QueryParamMapper.Map(queryParams);
             var result = await productService.GetPageAsync(query, cancellationToken);
             return result.ToApiResponse(ProductMapper.Map);
-        }).WithTags("Products");
+        })
+        .WithTags("Products")
+        .RequireAuthorization();
 
         builder.MapPost(_baseRoute, async ([AsParameters] CreateProductRequestModel requestModel, IProductService productService, CancellationToken cancellationToken) =>
         {
             var request = CreateProductRequestMapper.Map(requestModel);
             var result = await productService.CreateAsync(request, cancellationToken);
             return result.ToApiResponse(ProductMapper.Map);
-        }).WithTags("Products");
+        })
+        .WithTags("Products")
+        .RequireAuthorization();
 
         builder.MapPut(_baseRoute + "/{id:guid}", async (Guid id, [AsParameters] CreateProductRequestModel requestModel, IProductService productService, CancellationToken cancellationToken) =>
         {
             var request = CreateProductRequestMapper.Map(requestModel);
             var result = await productService.UpdateAsync(id, request, cancellationToken);
             return result.ToApiResponse(ProductMapper.Map);
-        }).WithTags("Products");
+        })
+        .WithTags("Products")
+        .RequireAuthorization();
 
         builder.MapDelete(_baseRoute + "/{id:guid}", async (Guid id, IProductService productService, CancellationToken cancellationToken) =>
         {
             var result = await productService.DeleteAsync(id, cancellationToken);
             return result.ToApiResponse();
-        }).WithTags("Products");
+        })
+        .WithTags("Products")
+        .RequireAuthorization();
     }
 }

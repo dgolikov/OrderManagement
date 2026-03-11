@@ -1,4 +1,4 @@
-﻿namespace OrderManagement.WebAPI.Options;
+﻿namespace OrderManagement.Persistence;
 
 public class DatabaseOptions
 {

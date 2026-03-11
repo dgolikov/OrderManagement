@@ -3,9 +3,9 @@ using OrderManagement.Domain.Common;
 using OrderManagement.Domain.Common.Abstractions;
 using OrderManagement.Domain.Common.Errors;
 using OrderManagement.Domain.Common.Services;
-using OrderManagement.Persistanse.Errors;
+using OrderManagement.Persistence.Errors;
 
-namespace OrderManagement.Persistanse;
+namespace OrderManagement.Persistence;
 
 public abstract class BaseRepository<TEntity> where TEntity : PersistableEntity
 {

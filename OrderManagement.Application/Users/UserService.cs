@@ -30,8 +30,8 @@ public sealed class UserService : IUserService
             return Result.Failure<User>(new UserAlreadyExistError(request.Email));
         }
 
-        var salt = _hashService.CreateSalt();
-        var hash = _hashService.CalculateHash(request.Password, salt);
+        var salt = _hashService.GenerateSalt();
+        var hash = _hashService.CalculatePasswordHash(request.Password, salt);
 
         var user = User.Create(request.FirstName, request.LastName, request.Email, hash, salt);
 

@@ -2,6 +2,8 @@
 
 public interface IHashService
 {
-    string CalculateHash(string password, string salt);
-    string CreateSalt();
+    string CalculatePasswordHash(string password, string salt);
+    string CalculateTokenHash(string token);
+    string GenerateSalt();
+    string GenerateToken();
 }

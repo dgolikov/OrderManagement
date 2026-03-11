@@ -16,6 +16,8 @@ public static class UserEndpoints
             var request = CreateUserRequestMapper.Map(requestModel);
             var result = await userService.CreateAsync(request, cancellationToken);
             return result.ToApiResponse(UserMapper.Map);
-        }).WithTags("Users");
+        })
+        .WithTags("Users")
+        .AllowAnonymous();
     }
 }

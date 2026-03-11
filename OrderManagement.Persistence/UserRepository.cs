@@ -4,7 +4,7 @@ using OrderManagement.Domain.Common.Errors;
 using OrderManagement.Domain.Common.Services;
 using OrderManagement.Domain.User;
 
-namespace OrderManagement.Persistanse;
+namespace OrderManagement.Persistence;
 
 public class UserRepository : BaseRepository<User>, IUserRepository
 {
