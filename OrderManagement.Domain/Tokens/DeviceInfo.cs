@@ -8,6 +8,6 @@ public sealed record DeviceInfo
     public DeviceInfo(string? ip, string? userAgent)
     {
         IP = string.IsNullOrWhiteSpace(ip) ? "Unknown" : ip;
-        UserAgent = string.IsNullOrWhiteSpace(ip) ? "Unknown" : ip;
+        UserAgent = string.IsNullOrWhiteSpace(userAgent) ? "Unknown" : userAgent;
     }
 }

@@ -1,0 +1,29 @@
+<div class="sign-in-container">
+  <mat-card class="example-card" appearance="outlined">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Добро пожаловать!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="sign-in-form">
+        <mat-form-field>
+          <mat-label>Email:</mat-label>
+          <input [formControl]="email" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password:</mat-label>
+          <input [formControl]="password" matInput type="password" />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        (click)="onSingIn()"
+        [disabled]="(signInForm.statusChanges | async) === 'INVALID'"
+        matButton
+      >
+        Войти
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

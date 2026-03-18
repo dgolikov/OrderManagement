@@ -1,0 +1,8 @@
+<div class="container">
+  @for (product of products(); track $index) {
+    <div>
+      <p>{{ product.name }}</p>
+      всего за {{ product.price }}
+    </div>
+  }
+</div>

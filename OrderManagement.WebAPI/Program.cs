@@ -52,6 +52,8 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors();
+
 builder.Services.AddDataProtection().UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
 {
     EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
@@ -86,6 +88,14 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+
+    app.UseCors((policyBuilder) =>
+    {
+        policyBuilder.WithOrigins("http://localhost:4200");
+        policyBuilder.AllowAnyHeader();
+        policyBuilder.AllowAnyMethod();
+        policyBuilder.AllowCredentials();
+    });
 }
 
 app.UseHttpsRedirection();
