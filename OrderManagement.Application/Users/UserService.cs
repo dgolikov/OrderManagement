@@ -42,4 +42,9 @@ public sealed class UserService : IUserService
 
         return await _userRepository.CreateAsync(user.Value, cancellationToken);
     }
+
+    public async Task<Result<User>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _userRepository.GetByIdAsync(id, cancellationToken);
+    }
 }

@@ -1,8 +1,11 @@
-<div class="container">
+<!-- <div class="container">
   @for (product of products(); track $index) {
     <div>
+      @if (product.imageUrl) {
+        <img [src]="product.imageUrl" [alt]="product.name" style="max-width: 100px; max-height: 100px;">
+      }
       <p>{{ product.name }}</p>
       всего за {{ product.price }}
     </div>
   }
-</div>
+</div> -->

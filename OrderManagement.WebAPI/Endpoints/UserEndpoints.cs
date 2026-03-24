@@ -1,6 +1,7 @@
 ﻿using OrderManagement.Application.Users;
 using OrderManagement.Models.Mappers.Users;
 using OrderManagement.Models.Requests;
+using OrderManagement.WebAPI.Endpoints.RequestData;
 using OrderManagement.WebAPI.Extensions;
 
 namespace OrderManagement.WebAPI.Endpoints;
@@ -19,5 +20,16 @@ public static class UserEndpoints
         })
         .WithTags("Users")
         .AllowAnonymous();
+
+        builder.MapGet($"{_baseRoute}/me", async (
+            AuthenticationRequestData authData,
+            IUserService userService,
+            CancellationToken cancellationToken) =>
+        {
+            var result = await userService.GetByIdAsync(authData.UserId, cancellationToken);
+            return result.ToApiResponse(UserMapper.Map);
+        })
+        .WithTags("Users")
+        .RequireAuthorization();
     }
 }

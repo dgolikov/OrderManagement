@@ -46,8 +46,8 @@ public sealed class JwtFactory : IJwtFactory
     private string CreateAccessToken(Guid userId, Guid refreshTokenId, DateTime expiresAt)
     {
         var identity = new ClaimsIdentity([
-            new(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new(JwtRegisteredClaimNames.Sid, refreshTokenId.ToString())
+            new("userId", userId.ToString()),
+            new("sessionId", refreshTokenId.ToString())
         ]);
 
         var bytes = Encoding.UTF8.GetBytes(_options.JwtSecret);

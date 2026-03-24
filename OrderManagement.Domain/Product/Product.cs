@@ -10,15 +10,17 @@ public sealed class Product : PersistableEntity
     public string Name { get; private set; }
     public decimal Price { get; private set; }
     public string SKU { get; private set;  }
+    public string? ImageUrl { get; private set; }
 
-    private Product(string name, decimal price, string sku)
+    private Product(string name, decimal price, string sku, string? imageUrl)
     {
         Name = name;
         Price = price;
         SKU = sku;
+        ImageUrl = imageUrl;
     }
 
-    public static Result<Product> Create(string name, decimal price, string sku)
+    public static Result<Product> Create(string name, decimal price, string sku, string? imageUrl = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -30,7 +32,7 @@ public sealed class Product : PersistableEntity
             return Result.Failure<Product>(new PropertyIsRequiredError(nameof(sku)));
         }
 
-        return new Product(name, price, sku);
+        return new Product(name, price, sku, imageUrl);
     }
 
     public Result SetName(string name)
@@ -67,5 +69,10 @@ public sealed class Product : PersistableEntity
         SKU = sku;
 
         return Result.Succsess();
+    }
+
+    public void SetImageUrl(string? imageUrl)
+    {
+        ImageUrl = imageUrl;
     }
 }

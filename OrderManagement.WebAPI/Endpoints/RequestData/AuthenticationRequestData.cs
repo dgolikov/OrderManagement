@@ -9,12 +9,12 @@ public sealed record AuthenticationRequestData(Guid UserId, Guid RefreshTokenId)
     {
         var identity = context.User.Identities.First();
 
-        if (!Guid.TryParse(identity.Claims.First(c => c.Type == JwtRegisteredClaimNames.Sub).Value, out var userId))
+        if (!Guid.TryParse(identity.Claims.First(c => c.Type == "userId").Value, out var userId))
         {
             throw new Exception("Invalid authentication token");
         }
 
-        if (!Guid.TryParse(identity.Claims.First(c => c.Type == JwtRegisteredClaimNames.Sid).Value, out var refreshTokenId))
+        if (!Guid.TryParse(identity.Claims.First(c => c.Type == "sessionId").Value, out var refreshTokenId))
         {
             throw new Exception("Invalid authentication token");
         }

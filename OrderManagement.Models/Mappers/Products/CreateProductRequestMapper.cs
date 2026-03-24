@@ -5,5 +5,5 @@ namespace OrderManagement.Models.Mappers.Products;
 
 public static class CreateProductRequestMapper
 {
-    public static CreateProductRequest Map(CreateProductRequestModel model) => new(model.Name, model.Price, model.SKU);
+    public static CreateProductRequest Map(CreateProductRequestModel model) => new(model.Name, model.Price, model.SKU, model.ImageUrl);
 }

@@ -17,6 +17,7 @@ using OrderManagement.Domain.User;
 using OrderManagement.Persistence;
 using OrderManagement.WebAPI.Endpoints;
 using Scalar.AspNetCore;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -84,21 +85,21 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.UseCors((policyBuilder) =>
+{
+    policyBuilder.WithOrigins("http://localhost:4200");
+    policyBuilder.AllowAnyHeader();
+    policyBuilder.AllowAnyMethod();
+    policyBuilder.AllowCredentials();
+});
+
+app.UseHttpsRedirection();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
-
-    app.UseCors((policyBuilder) =>
-    {
-        policyBuilder.WithOrigins("http://localhost:4200");
-        policyBuilder.AllowAnyHeader();
-        policyBuilder.AllowAnyMethod();
-        policyBuilder.AllowCredentials();
-    });
 }
-
-app.UseHttpsRedirection();
 
 app.MapProductEndpoints();
 app.MapUserEndpoints();

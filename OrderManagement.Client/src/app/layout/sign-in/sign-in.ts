@@ -25,13 +25,10 @@ import { CommonModule } from '@angular/common';
 export class SignInComponent {
   private readonly _authService: AuthService = inject(AuthService);
 
-  public signInForm = new FormGroup(
-    {
-      email: new FormControl<string>('', [Validators.required, Validators.email]),
-      password: new FormControl<string>('', [Validators.required]),
-    },
-    { updateOn: 'blur' },
-  );
+  public signInForm = new FormGroup({
+    email: new FormControl<string>('', [Validators.required, Validators.email]),
+    password: new FormControl<string>('', [Validators.required]),
+  });
 
   public get email(): FormControl<string> {
     return this.signInForm.get('email') as FormControl<string>;

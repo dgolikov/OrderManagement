@@ -1,7 +1,7 @@
 <Solution>
   <Folder Name="/Infrastructure/">
     <Project Path="OrderManagement.Authentication/OrderManagement.Authentication.csproj" Id="f89c24f8-a78f-48e1-a8dc-9145c11c38b9" />
-    <Project Path="OrderManagement.Persistence/OrderManagement.Persistence.csproj" />
+    <Project Path="OrderManagement.Persistanse/OrderManagement.Persistanse.csproj" />
   </Folder>
   <Folder Name="/Tests/" />
   <Project Path="docker-compose.dcproj">
@@ -11,5 +11,4 @@
   <Project Path="OrderManagement.Domain/OrderManagement.Domain.csproj" />
   <Project Path="OrderManagement.Models/OrderManagement.Models.csproj" />
   <Project Path="OrderManagement.WebAPI/OrderManagement.WebAPI.csproj" />
-  <Project Path="OrderManagement.DataSeeder/OrderManagement.DataSeeder.csproj" />
 </Solution>

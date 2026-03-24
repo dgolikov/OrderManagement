@@ -6,4 +6,5 @@ namespace OrderManagement.Application.Users;
 public interface IUserService
 {
     Task<Result<User>> CreateAsync(CreateUserRequest request, CancellationToken cancellationToken);
+    Task<Result<User>> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

@@ -4,11 +4,14 @@ services:
     build:
       context: .
       dockerfile: OrderManagement.WebAPI/Dockerfile
+    ports:
+      - "29701:8080"
+      - "29702:8081"
     networks:
      - ordermanagementnetwork
   mongodb:
     image: mongo:8.0.3
-    container_name: mongodb
+    container_name: ordermanagement-mongodb
     volumes:
         - "D:\\Docker\\Volumes\\OrderManagement:/data/db"
     ports:
