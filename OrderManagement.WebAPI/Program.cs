@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using OrderManagement.Application.Authentication;
+using OrderManagement.Application.Orders;
 using OrderManagement.Application.Products;
 using OrderManagement.Application.Users;
 using OrderManagement.Authentication;
@@ -49,6 +50,7 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddOpenApi();
@@ -102,6 +104,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapProductEndpoints();
+app.MapOrderEndpoints();
 app.MapUserEndpoints();
 app.MapAuthenticationEndpoints();
 

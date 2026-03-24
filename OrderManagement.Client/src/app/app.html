@@ -1,6 +1,6 @@
 @if (isAuthorized()) {
   <div class="toolbar-container">
-    <mat-toolbar color="primary">
+    <mat-toolbar>
       <button mat-icon-button (click)="sidenav.toggle()" aria-label="Toggle sidenav">
         <mat-icon>menu</mat-icon>
       </button>
@@ -27,7 +27,7 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content> </mat-sidenav-content>
+    <mat-sidenav-content> <router-outlet /></mat-sidenav-content>
   </mat-sidenav-container>
 } @else {
   <router-outlet />

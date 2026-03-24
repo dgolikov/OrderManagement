@@ -39,7 +39,6 @@ export class AuthService {
   public readonly isAuthorized = computed(() => !!this._payload());
 
   constructor() {
-    console.log('test');
     effect(() => {
       localStorage.setItem('accessToken', this._accessToken());
       localStorage.setItem('refreshToken', this._refreshToken());
@@ -66,7 +65,6 @@ export class AuthService {
     if (!this._accessToken()) return;
 
     const userId = this._payload()?.userId;
-    console.log(this._payload());
     if (!userId) return;
 
     if (this._currentUser()) return;

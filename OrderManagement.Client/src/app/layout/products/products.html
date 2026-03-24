@@ -1,11 +1,27 @@
-<!-- <div class="container">
-  @for (product of products(); track $index) {
-    <div>
-      @if (product.imageUrl) {
-        <img [src]="product.imageUrl" [alt]="product.name" style="max-width: 100px; max-height: 100px;">
-      }
-      <p>{{ product.name }}</p>
-      всего за {{ product.price }}
+<div class="products-container">
+  <div class="products-grid">
+    @for (product of products(); track product.id) {
+      <mat-card class="product-card" appearance="outlined">
+        @if (product.imageUrl) {
+          <img [src]="product.imageUrl" [alt]="product.name" />
+        }
+        <mat-card-content>
+          <p class="product-name">{{ product.name }}</p>
+          <p class="product-price">{{ product.price }} ₽</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
     </div>
   }
-</div> -->
+
+  @if (showNoMore()) {
+    <div class="no-more-products">All products loaded</div>
+  }
+
+  <div appInfiniteScroll (reachedBottom)="onLoadMore()"></div>
+</div>

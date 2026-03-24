@@ -1,7 +1,9 @@
-﻿namespace OrderManagement.Domain.Order;
+namespace OrderManagement.Domain.Order;
 
 public enum OrderStatus
 {
     Created = 0,
-    Fullfulled = 1
+    Approved = 1,
+    InShipping = 2,
+    Shipped = 3
 }

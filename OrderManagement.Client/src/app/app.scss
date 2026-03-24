@@ -1,9 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
 .sidenav-container {
   height: calc(100vh - 64px);
 }
 
 .sidenav {
-  width: 250px;
+  width: 220px;
+  padding: 0 12px;
 }
 
 .spacer {

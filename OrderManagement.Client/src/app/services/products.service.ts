@@ -12,7 +12,7 @@ export class ProductService {
   private readonly _http: HttpClient = inject(HttpClient);
   private readonly _apiUrl: string = `${environment.apiUrl}/products`;
 
-  public getPage(): Observable<IPage<IProduct>> {
-    return this._http.get<IPage<IProduct>>(`${this._apiUrl}?pageNumber=1&pageSize=100`);
+  public getPage(pageNumber: number = 1, pageSize: number = 20): Observable<IPage<IProduct>> {
+    return this._http.get<IPage<IProduct>>(`${this._apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 }
