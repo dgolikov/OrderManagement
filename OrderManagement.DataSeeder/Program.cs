@@ -18,6 +18,7 @@ static class Program
     private const string ProductsCollectionName = "products";
     private const string UsersCollectionName = "users";
     private const string OrdersCollectionName = "orders";
+    private const long StartingOrderNumber = 10000;
 
     static async Task<int> Main(string[] args)
     {
@@ -26,17 +27,14 @@ static class Program
 
         try
         {
-            // Step 1: Seed Products
             var products = await SeedProductsAsync();
             if (products == null)
                 return 1;
 
-            // Step 2: Seed Users
             var users = await SeedUsersAsync();
             if (users == null)
                 return 1;
 
-            // Step 3: Seed Orders
             var orders = await SeedOrdersAsync(products, users);
             if (orders == null)
                 return 1;
@@ -154,12 +152,14 @@ static class Program
         Console.WriteLine($"Generating {totalOrdersToGenerate} orders ({OrdersPerUser} per user)...");
 
         var allOrders = new List<Order>();
+        var currentOrderNumber = StartingOrderNumber;
 
         foreach (var user in users)
         {
             Console.WriteLine($"  Generating orders for {user.Email}...");
-            var orderFaker = CreateOrderFaker(products, user.Id);
+            var orderFaker = CreateOrderFaker(products, user.Id, currentOrderNumber);
             var userOrders = orderFaker.Generate(OrdersPerUser);
+            currentOrderNumber += OrdersPerUser;
             allOrders.AddRange(userOrders);
         }
 
@@ -168,6 +168,7 @@ static class Program
         await collection.DeleteManyAsync(FilterDefinition<Order>.Empty);
         await collection.InsertManyAsync(allOrders);
         Console.WriteLine($"Successfully inserted {allOrders.Count} orders!");
+        Console.WriteLine($"Order numbers: {StartingOrderNumber} to {StartingOrderNumber + allOrders.Count - 1}");
 
         return allOrders;
     }
@@ -271,12 +272,16 @@ static class Program
 
     private static Faker<Order> CreateOrderFaker(
         List<Product> products,
-        Guid userId)
+        Guid userId,
+        long startingOrderNumber)
     {
+        var orderNumber = startingOrderNumber;
+        var statuses = Enum.GetValues<OrderStatus>();
+
         return new Faker<Order>()
             .CustomInstantiator(f =>
             {
-                var itemCount = f.Random.Int(1, 10);
+                var itemCount = f.Random.Int(1, 5);
                 var selectedProducts = f.PickRandom(products, itemCount).ToList();
 
                 var lineItems = selectedProducts.Select(p =>
@@ -293,6 +298,9 @@ static class Program
                 {
                     throw new InvalidOperationException($"Failed to create order: {result.Error?.Message}");
                 }
+
+                result.Value.SetOrderNumber(orderNumber++);
+                result.Value.SetStatus(f.PickRandom(statuses));
 
                 return result.Value;
             });

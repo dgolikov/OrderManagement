@@ -12,7 +12,11 @@ export class ProductService {
   private readonly _http: HttpClient = inject(HttpClient);
   private readonly _apiUrl: string = `${environment.apiUrl}/products`;
 
-  public getPage(pageNumber: number = 1, pageSize: number = 20): Observable<IPage<IProduct>> {
-    return this._http.get<IPage<IProduct>>(`${this._apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  public getPage(pageNumber: number = 1, pageSize: number = 20, searchTerm?: string): Observable<IPage<IProduct>> {
+    let url = `${this._apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    if (searchTerm) {
+      url += `&searchTerm=${encodeURIComponent(searchTerm)}`;
+    }
+    return this._http.get<IPage<IProduct>>(url);
   }
 }

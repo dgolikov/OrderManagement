@@ -6,12 +6,17 @@ namespace OrderManagement.Domain.Order;
 
 public sealed class Order : PersistableEntity
 {
-    private readonly List<OrderLineItem> _lineItems = new();
+    private List<OrderLineItem> _lineItems = [];
 
     public Guid UserId { get; private set; }
     public OrderStatus Status { get; private set; }
-    public IReadOnlyCollection<OrderLineItem> LineItems => _lineItems.AsReadOnly();
-    public decimal Total => _lineItems.Sum(item => item.Quantity * item.Price);
+    public List<OrderLineItem> LineItems
+    {
+        get => _lineItems?.ToList() ?? [];
+        private set => _lineItems = value;
+    }
+    public decimal Total => LineItems.Sum(item => item.Quantity * item.Price);
+    public long OrderNumber { get; private set; }
 
     private Order(Guid userId, OrderStatus status)
     {
@@ -57,5 +62,10 @@ public sealed class Order : PersistableEntity
     public void SetStatus(OrderStatus status)
     {
         Status = status;
+    }
+
+    public void SetOrderNumber(long orderNumber)
+    {
+        OrderNumber = orderNumber;
     }
 }

@@ -17,13 +17,15 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button
-        (click)="onSingIn()"
-        [disabled]="(signInForm.statusChanges | async) === 'INVALID'"
-        matButton
-      >
-        Войти
-      </button>
+      <div class="actions-container">
+        <button
+          (click)="onSingIn()"
+          [disabled]="(signInForm.statusChanges | async) === 'INVALID'"
+          matButton
+        >
+          Войти
+        </button>
+      </div>
     </mat-card-actions>
   </mat-card>
 </div>

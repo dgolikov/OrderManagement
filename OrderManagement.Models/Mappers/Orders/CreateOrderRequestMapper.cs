@@ -7,5 +7,5 @@ public static class CreateOrderRequestMapper
 {
     public static CreateOrderRequest Map(CreateOrderRequestModel model) => new(
         model.UserId,
-        model.LineItems.Select(li => new CreateOrderLineItemRequest(li.ProductId, li.Quantity, li.Price)));
+        model.LineItems.Select(li => new CreateOrderLineItemRequest(li.ProductId, li.Quantity)));
 }

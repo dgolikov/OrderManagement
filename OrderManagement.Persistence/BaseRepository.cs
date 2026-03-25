@@ -15,6 +15,9 @@ public abstract class BaseRepository<TEntity> where TEntity : PersistableEntity
 
     protected IMongoCollection<TEntity> Collection => _database.GetCollection<TEntity>(_collectionName);
 
+    protected virtual FilterDefinition<TEntity> BuildPageFilter(QueryParams queryParams)
+        => Builders<TEntity>.Filter.Empty;
+
     protected BaseRepository(IMongoDatabase database, IDateTimeProvider dateTimeProvider, string collectionName)
     {
         _database = database;
@@ -34,13 +37,15 @@ public abstract class BaseRepository<TEntity> where TEntity : PersistableEntity
 
     public async Task<Page<TEntity>> GetPageAsync(QueryParams queryParams, CancellationToken cancellationToken)
     {
+        var filter = BuildPageFilter(queryParams);
+
         var pageTask = Collection
-            .Find(x => true)
+            .Find(filter)
             .Skip((queryParams.PageNumber - 1) * queryParams.PageSize)
             .Limit(queryParams.PageSize)
             .ToListAsync(cancellationToken);
 
-        var countTask = Collection.CountDocumentsAsync(x => true, cancellationToken: cancellationToken);
+        var countTask = Collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
 
         await Task.WhenAll(pageTask, countTask);
 

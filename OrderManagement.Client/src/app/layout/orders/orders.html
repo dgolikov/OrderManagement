@@ -1,0 +1,66 @@
+<div class="orders-container">
+  <h1 class="page-title">Мои заказы</h1>
+
+  <div class="orders-list">
+    @for (order of orders(); track order.id) {
+      <mat-card class="order-card" appearance="outlined">
+        <mat-card-title class="order-header">
+          <span class="order-number">Заказ #{{ order.orderNumber }}</span>
+          <span class="order-status" [class]="'status-' + order.status.toLowerCase()">
+            {{ translateStatus(order.status) }}
+          </span>
+        </mat-card-title>
+
+        <mat-card-content>
+          <div class="line-items">
+            @for (item of order.lineItems; track item.productId) {
+              <div class="line-item">
+                <div class="item-image">
+                  @if (item.imageUrl) {
+                    <img [src]="item.imageUrl" [alt]="item.productName" />
+                  } @else {
+                    <div class="no-image">
+                      <span>Нет фото</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="item-details">
+                  <p class="item-name">{{ item.productName }}</p>
+                  <p class="item-quantity">
+                    {{ item.quantity }} шт. × {{ formatPrice(item.price) }}
+                  </p>
+                </div>
+
+                <div class="item-total">
+                  {{ formatPrice(calculateLineItemTotal(item.quantity, item.price)) }}
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="order-total">
+            <span>Итого:</span>
+            <span class="total-price">{{ formatPrice(order.total) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  @if (!hasMore() && orders().length > 0) {
+    <div class="no-more-orders">Все заказы загружены</div>
+  }
+
+  @if (orders().length === 0 && !isLoading()) {
+    <div class="no-orders">У вас пока нет заказов</div>
+  }
+
+  <div appInfiniteScroll (reachedBottom)="onLoadMore()"></div>
+</div>

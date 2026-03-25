@@ -1,4 +1,17 @@
 <div class="products-container">
+  <div class="search-bar">
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-label>Поиск по каталогу</mat-label>
+      <input
+        matInput
+        type="text"
+        [ngModel]="searchInput()"
+        (ngModelChange)="onSearchChange($event)"
+        placeholder="Имя продукта..."
+      />
+    </mat-form-field>
+  </div>
+
   <div class="products-grid">
     @for (product of products(); track product.id) {
       <mat-card class="product-card" appearance="outlined">
@@ -19,8 +32,8 @@
     </div>
   }
 
-  @if (showNoMore()) {
-    <div class="no-more-products">All products loaded</div>
+  @if (nothingFound()) {
+    <div class="no-more-products">Продуктов не найдено</div>
   }
 
   <div appInfiniteScroll (reachedBottom)="onLoadMore()"></div>
