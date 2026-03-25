@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Infrastructure/">
     <Project Path="OrderManagement.Authentication/OrderManagement.Authentication.csproj" Id="f89c24f8-a78f-48e1-a8dc-9145c11c38b9" />
+    <Project Path="OrderManagement.Caching/OrderManagement.Caching.csproj" />
     <Project Path="OrderManagement.Persistence/OrderManagement.Persistence.csproj" />
   </Folder>
   <Folder Name="/Tests/" />

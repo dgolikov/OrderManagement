@@ -15,6 +15,9 @@ using OrderManagement.Domain.Order;
 using OrderManagement.Domain.Product;
 using OrderManagement.Domain.Tokens;
 using OrderManagement.Domain.User;
+using OrderManagement.Caching;
+using OrderManagement.Caching.Decorators;
+using OrderManagement.Domain.Common.Options;
 using OrderManagement.Persistence;
 using OrderManagement.WebAPI.Endpoints;
 using Scalar.AspNetCore;
@@ -24,6 +27,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<DatabaseOptions>(builder.Configuration.GetSection(nameof(DatabaseOptions)));
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+builder.Services.Configure<RedisOptions>(builder.Configuration.GetSection(nameof(RedisOptions)));
 
 builder.Services.AddScoped(typeof(IMongoDatabase), sp =>
 {
@@ -36,14 +40,21 @@ builder.Services.AddScoped(typeof(IMongoDatabase), sp =>
 
 builder.Services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
+builder.Services.AddStackExchangeRedisCache(options => options.Configuration = builder.Configuration["RedisOptions:ConnectionString"] ?? "localhost:6379");
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
+
 builder.Services.AddScoped<IHashService, HashService>();
 builder.Services.AddScoped<IJwtFactory, JwtFactory>();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IOrderNumberGenerator, OrderNumberGenerator>();
+
+builder.Services.Decorate<IProductRepository, CachingProductRepository>();
+builder.Services.Decorate<IOrderRepository, CachingOrderRepository>();
+builder.Services.Decorate<IUserRepository, CachingUserRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -81,8 +92,6 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 
 app.UseCors((policyBuilder) =>
 {

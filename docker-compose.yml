@@ -21,6 +21,18 @@ services:
         - MONGO_INITDB_ROOT_PASSWORD=12345678Aa
     networks:
      - ordermanagementnetwork
+  redis:
+    image: redis:7.4-alpine
+    container_name: ordermanagement-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ordermanagementnetwork
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 networks:
   ordermanagementnetwork:
     driver: bridge

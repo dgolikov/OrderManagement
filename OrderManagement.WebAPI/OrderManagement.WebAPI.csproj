@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OrderManagement.Application\OrderManagement.Application.csproj" />
     <ProjectReference Include="..\OrderManagement.Authentication\OrderManagement.Authentication.csproj" />
+    <ProjectReference Include="..\OrderManagement.Caching\OrderManagement.Caching.csproj" />
     <ProjectReference Include="..\OrderManagement.Models\OrderManagement.Models.csproj" />
     <ProjectReference Include="..\OrderManagement.Persistence\OrderManagement.Persistence.csproj" />
   </ItemGroup>
