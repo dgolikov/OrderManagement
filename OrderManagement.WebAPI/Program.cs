@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
@@ -40,7 +41,13 @@ builder.Services.AddScoped(typeof(IMongoDatabase), sp =>
 
 builder.Services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
-builder.Services.AddStackExchangeRedisCache(options => options.Configuration = builder.Configuration["RedisOptions:ConnectionString"] ?? "localhost:6379");
+builder.Services.AddStackExchangeRedisCache(_ => { });
+builder.Services.AddSingleton<IConfigureOptions<RedisCacheOptions>>(sp =>
+    new ConfigureOptions<RedisCacheOptions>(options =>
+    {
+        var redisOptions = sp.GetRequiredService<IOptions<RedisOptions>>();
+        options.Configuration = redisOptions.Value.ConnectionString;
+    }));
 builder.Services.AddScoped<ICacheService, RedisCacheService>();
 
 builder.Services.AddScoped<IHashService, HashService>();
@@ -115,3 +122,5 @@ app.MapUserEndpoints();
 app.MapAuthenticationEndpoints();
 
 app.Run();
+
+public partial class Program { }

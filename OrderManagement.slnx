@@ -4,7 +4,9 @@
     <Project Path="OrderManagement.Caching/OrderManagement.Caching.csproj" />
     <Project Path="OrderManagement.Persistence/OrderManagement.Persistence.csproj" />
   </Folder>
-  <Folder Name="/Tests/" />
+  <Folder Name="/Tests/">
+    <Project Path="OrderManagement.Tests.Integration/OrderManagement.Tests.Integration.csproj" />
+  </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
